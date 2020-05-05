@@ -1,0 +1,21 @@
+import os #Import necessary modules
+
+Folder = input('Enter the folder name that needs to grouped:') #Get the full path of Folder
+try:
+    for folder,subfolder,files in os.walk(Folder): #Walk through the folder
+        for file in files:
+            filname,filext = os.path.splitext(file)#Find the extension
+            if os.path.isdir(os.path.join(Folder,filext[1:])):               #Check if the extension already exists in list else make a new directory
+               os.rename(os.path.join(Folder,file), os.path.join(Folder,filext[1:],file))   #Move the file to already existing directory
+            else:                                            #Create a directory and move the files to the directory
+                os.mkdir(os.path.join(folder,filext.upper()[1:]))
+                os.rename(os.path.join(Folder,file), os.path.join(Folder,filext[1:],file))
+                print('The files are categorised')
+except FileNotFoundError:    #Displaying to users that the cateorisation is already done
+    print('The files are already categorised')
+                
+                
+                
+
+
+            

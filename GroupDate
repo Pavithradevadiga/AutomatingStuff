@@ -1,0 +1,16 @@
+import os,time,datetime,calendar #Import necessary modules
+
+Folder = input('Enter the folder name that needs to grouped:') #Get the full path of Folder
+try:
+    for folder,subfolder,files in os.walk(Folder): #Walk through the folder
+        for file in files:
+            a = datetime.datetime.strptime(time.ctime(os.path.getctime(os.path.join(Folder,file))),"%a %b %d %H:%M:%S %Y")
+            month = calendar.month_name[a.month]
+            if os.path.isdir(os.path.join(Folder,month)):               #Check if the extension already exists in list else make a new directory
+               os.rename(os.path.join(Folder,file), os.path.join(Folder,month,file))   #Move the file to already existing directory
+            else:                                            #Create a directory and move the files to the directory
+                os.mkdir(os.path.join(folder,month.upper()))
+                os.rename(os.path.join(Folder,file), os.path.join(Folder,month,file))
+    print('The files are categorised')
+except FileNotFoundError:    #Displaying to users that the cateorisation is already done
+    print('The files are already categorised')
